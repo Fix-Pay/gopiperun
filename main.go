@@ -87,6 +87,100 @@ func FindAllCompanies(token string) {
 	//fmt.Println(string(body)) //TODO
 }
 
+func FindCompanie(token, cpfCnpj string) Company {
+	response := Company{}
+	url := `https://api.pipe.run/v1/companies?show=123&cnpj=` + cpfCnpj
+	method := "GET"
+
+	client := &http.Client{}
+	req, err := http.NewRequest(method, url, nil)
+
+	if err != nil {
+		goutils.CreateFileDay(goutils.Message{File: "FindCompanie", Error: err.Error()})
+		return response
+	}
+	req.Header.Add("Content-Type", "application/json")
+	req.Header.Add("Token", token)
+
+	res, err := client.Do(req)
+	if err != nil {
+		goutils.CreateFileDay(goutils.Message{File: "FindCompanie", Error: err.Error()})
+		return response
+	}
+	defer res.Body.Close()
+
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		goutils.CreateFileDay(goutils.Message{File: "FindCompanie", Error: err.Error()})
+		return response
+	}
+
+	err = json.Unmarshal(body, &response)
+	if err != nil {
+		goutils.CreateFileDay(goutils.Message{File: "FindCompanie", Error: err.Error()})
+		return response
+	}
+	return response
+}
+
+func CreateCompany(token, cpfCnpj, socialReason, cep, street, number, complement, neighborhood, email, phone string) Company {
+	var response = Company{}
+
+	url := "https://api.pipe.run/v1/companies"
+	method := "POST"
+
+	payload := strings.NewReader(`{"name": "` + socialReason + `",` +
+		`"cnpj": "` + cpfCnpj + `",` +
+		`"address_postal_code": "` + cep + `",` +
+		`"address": "` + street + `",` +
+		`"address_number": "` + number + `",` +
+		`"address_complement": "` + complement + `",` +
+		`"district": "` + neighborhood + `",` +
+		`"country": "Brasil",` +
+		`"cep": "` + cep + `",` +
+		`"city_id": null,` +
+		`"contactEmails":[` +
+		`{` +
+		`"email":"` + email + `"` +
+		`}` +
+		`],` +
+		`"contactPhones":[` +
+		`{` +
+		`"phone":"` + phone + `"` +
+		`}` +
+		`]` +
+		`}`)
+
+	client := &http.Client{}
+	req, err := http.NewRequest(method, url, payload)
+
+	if err != nil {
+		goutils.CreateFileDay(goutils.Message{File: "CreateCompany", Error: err.Error()})
+		return response
+	}
+	req.Header.Add("Content-Type", "application/json")
+	req.Header.Add("Token", token)
+
+	res, err := client.Do(req)
+	if err != nil {
+		goutils.CreateFileDay(goutils.Message{File: "CreateCompany", Error: err.Error()})
+		return response
+	}
+	defer res.Body.Close()
+
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		goutils.CreateFileDay(goutils.Message{File: "CreateCompany", Error: err.Error()})
+		return response
+	}
+	err = json.Unmarshal(body, &response)
+	if err != nil {
+		goutils.CreateFileDay(goutils.Message{File: "CreateCompany", Error: err.Error()})
+		return response
+	}
+	return response
+}
+
 func FindAllPeoples(token string) {
 	url := "https://api.pipe.run/v1/persons"
 	method := "GET"
