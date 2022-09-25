@@ -177,7 +177,7 @@ type Company struct {
 type CompanyData struct {
 	Success bool   `json:"success"`
 	Message string `json:"message"`
-	Data    []struct {
+	Data    struct {
 		Id                  int    `json:"id"`
 		AccountId           int    `json:"account_id"`
 		CnaeId              int    `json:"cnae_id"`
