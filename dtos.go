@@ -1,4 +1,4 @@
-package main
+package gopiperun
 
 import "github.com/armando-couto/goutils"
 
