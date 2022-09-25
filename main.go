@@ -87,8 +87,8 @@ func FindAllCompanies(token string) {
 	//fmt.Println(string(body)) //TODO
 }
 
-func FindCompanie(token, cpfCnpj string) Company {
-	response := Company{}
+func FindCompanie(token, cpfCnpj string) CompanyData {
+	response := CompanyData{}
 	url := `https://api.pipe.run/v1/companies?show=123&cnpj=` + cpfCnpj
 	method := "GET"
 
@@ -123,8 +123,8 @@ func FindCompanie(token, cpfCnpj string) Company {
 	return response
 }
 
-func CreateCompany(token, cpfCnpj, socialReason, cep, street, number, complement, neighborhood, email, phone string) Company {
-	var response = Company{}
+func CreateCompany(token, cpfCnpj, socialReason, cep, street, number, complement, neighborhood, email, phone string) CompanyData {
+	var response = CompanyData{}
 
 	url := "https://api.pipe.run/v1/companies"
 	method := "POST"

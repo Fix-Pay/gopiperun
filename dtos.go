@@ -174,6 +174,72 @@ type Company struct {
 	IsPartner           bool        `json:"is_partner"`
 }
 
+type CompanyData struct {
+	Success bool   `json:"success"`
+	Message string `json:"message"`
+	Data    []struct {
+		Id                  int    `json:"id"`
+		AccountId           int    `json:"account_id"`
+		CnaeId              int    `json:"cnae_id"`
+		CityId              int    `json:"city_id"`
+		ManagerId           int    `json:"manager_id"`
+		SegmentId           int    `json:"segment_id"`
+		Name                string `json:"name"`
+		Cnpj                string `json:"cnpj"`
+		Website             string `json:"website"`
+		EmailNf             string `json:"email_nf"`
+		Logo                string `json:"logo"`
+		Hash                string `json:"hash"`
+		Observation         string `json:"observation"`
+		AddressPostalCode   string `json:"address_postal_code"`
+		Address             string `json:"address"`
+		AddressNumber       string `json:"address_number"`
+		AddressComplement   string `json:"address_complement"`
+		CompanyName         string `json:"company_name"`
+		Ie                  string `json:"ie"`
+		District            string `json:"district"`
+		Country             string `json:"country"`
+		Facebook            string `json:"facebook"`
+		Linkedin            string `json:"linkedin"`
+		Cep                 string `json:"cep"`
+		CompanyType         string `json:"company_type"`
+		CompanyStatus       string `json:"company_status"`
+		CompanySituation    string `json:"company_situation"`
+		StatusTouch         string `json:"status_touch"`
+		NpsScore            string `json:"nps_score"`
+		SocialCapital       int    `json:"social_capital"`
+		Lat                 string `json:"lat"`
+		Lng                 string `json:"lng"`
+		Status              bool   `json:"status"`
+		ExternalCode        string `json:"external_code"`
+		ForeignContact      int    `json:"foreign_contact"`
+		Size                string `json:"size"`
+		CustomerAt          string `json:"customer_at"`
+		FoundationAt        string `json:"foundation_at"`
+		UpdatedAt           string `json:"updated_at"`
+		CreatedAt           string `json:"created_at"`
+		IsBrand             bool   `json:"is_brand"`
+		IsSupplier          bool   `json:"is_supplier"`
+		IsClient            bool   `json:"is_client"`
+		IsCarrier           bool   `json:"is_carrier"`
+		IsFranchise         bool   `json:"is_franchise"`
+		IsChannel           bool   `json:"is_channel"`
+		OwnerId             int    `json:"owner_id"`
+		ManagerFieldSalesId int    `json:"manager_field_sales_id"`
+		IsDistributor       bool   `json:"is_distributor"`
+		IsManufacturer      bool   `json:"is_manufacturer"`
+		IsPartner           bool   `json:"is_partner"`
+	} `json:"data"`
+	Meta struct {
+		Total       int      `json:"total"`
+		Count       int      `json:"count"`
+		PerPage     int      `json:"per_page"`
+		CurrentPage int      `json:"current_page"`
+		TotalPages  int      `json:"total_pages"`
+		Links       []string `json:"links"`
+	} `json:"meta"`
+}
+
 type PersonResponse struct {
 	Success bool     `json:"success"`
 	Message string   `json:"message"`
