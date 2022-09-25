@@ -1,4 +1,4 @@
-module gopiperun
+module github.com/Fix-Pay/gopiperun
 
 go 1.16
 
