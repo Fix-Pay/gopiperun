@@ -260,6 +260,48 @@ func FindUser(token, usuarioNome string) User {
 	return u
 }
 
+func FindUserByEmail(token, usuarioEmail string) User {
+	url := `https://api.pipe.run/v1/users?show=123&email=` + url.QueryEscape(usuarioEmail)
+	method := "GET"
+
+	var u User
+
+	client := &http.Client{}
+	req, err := http.NewRequest(method, url, nil)
+
+	if err != nil {
+		goutils.CreateFileDay(goutils.Message{File: "FindUser", Error: err.Error()})
+		return u
+	}
+	req.Header.Add("Content-Type", "application/json")
+	req.Header.Add("Token", token)
+
+	res, err := client.Do(req)
+	if err != nil {
+		goutils.CreateFileDay(goutils.Message{File: "FindUser", Error: err.Error()})
+		return u
+	}
+	defer res.Body.Close()
+
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		goutils.CreateFileDay(goutils.Message{File: "FindUser", Error: err.Error()})
+		return u
+	}
+
+	var response = UserResponse{}
+	err = json.Unmarshal(body, &response)
+	if err != nil {
+		goutils.CreateFileDay(goutils.Message{File: "FindUser", Error: err.Error()})
+		return u
+	}
+
+	if len(response.Data) > 0 {
+		u = response.Data[0]
+	}
+	return u
+}
+
 func CreateFile(token, url, dealId string) error {
 	aux := strings.Split(url, "/")
 	fileName := aux[len(aux)-1]
