@@ -23,7 +23,7 @@ func FindAllOportunities(token string) {
 	req, err := http.NewRequest(method, url, nil)
 
 	if err != nil {
-		goutils.CreateFileDay(goutils.Message{File: "FindAllOportunities", Error: err.Error()})
+		goutils.CreateFileDay(goutils.Message{File: "FindAllOportunities", Error: err.Error()}, &goutils.MessageGotifyGlobal)
 		return
 	}
 	req.Header.Add("Content-Type", "application/json")
@@ -31,21 +31,21 @@ func FindAllOportunities(token string) {
 
 	res, err := client.Do(req)
 	if err != nil {
-		goutils.CreateFileDay(goutils.Message{File: "FindAllOportunities", Error: err.Error()})
+		goutils.CreateFileDay(goutils.Message{File: "FindAllOportunities", Error: err.Error()}, &goutils.MessageGotifyGlobal)
 		return
 	}
 	defer res.Body.Close()
 
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		goutils.CreateFileDay(goutils.Message{File: "FindAllOportunities", Error: err.Error()})
+		goutils.CreateFileDay(goutils.Message{File: "FindAllOportunities", Error: err.Error()}, &goutils.MessageGotifyGlobal)
 		return
 	}
 
 	var response = OportunityResponse{}
 	err = json.Unmarshal(body, &response)
 	if err != nil {
-		goutils.CreateFileDay(goutils.Message{File: "FindAllOportunities", Error: err.Error()})
+		goutils.CreateFileDay(goutils.Message{File: "FindAllOportunities", Error: err.Error()}, &goutils.MessageGotifyGlobal)
 		return
 	}
 }
@@ -58,7 +58,7 @@ func FindAllCompanies(token string) {
 	req, err := http.NewRequest(method, url, nil)
 
 	if err != nil {
-		goutils.CreateFileDay(goutils.Message{File: "FindAllCompanies", Error: err.Error()})
+		goutils.CreateFileDay(goutils.Message{File: "FindAllCompanies", Error: err.Error()}, &goutils.MessageGotifyGlobal)
 		return
 	}
 	req.Header.Add("Content-Type", "application/json")
@@ -66,21 +66,21 @@ func FindAllCompanies(token string) {
 
 	res, err := client.Do(req)
 	if err != nil {
-		goutils.CreateFileDay(goutils.Message{File: "FindAllCompanies", Error: err.Error()})
+		goutils.CreateFileDay(goutils.Message{File: "FindAllCompanies", Error: err.Error()}, &goutils.MessageGotifyGlobal)
 		return
 	}
 	defer res.Body.Close()
 
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		goutils.CreateFileDay(goutils.Message{File: "FindAllCompanies", Error: err.Error()})
+		goutils.CreateFileDay(goutils.Message{File: "FindAllCompanies", Error: err.Error()}, &goutils.MessageGotifyGlobal)
 		return
 	}
 
 	var response = CompanyResponse{}
 	err = json.Unmarshal(body, &response)
 	if err != nil {
-		goutils.CreateFileDay(goutils.Message{File: "FindAllCompanies", Error: err.Error()})
+		goutils.CreateFileDay(goutils.Message{File: "FindAllCompanies", Error: err.Error()}, &goutils.MessageGotifyGlobal)
 		return
 	}
 
@@ -96,7 +96,7 @@ func FindCompanie(token, cpfCnpj string) CompanyData {
 	req, err := http.NewRequest(method, url, nil)
 
 	if err != nil {
-		goutils.CreateFileDay(goutils.Message{File: "FindCompanie", Error: err.Error()})
+		goutils.CreateFileDay(goutils.Message{File: "FindCompanie", Error: err.Error()}, &goutils.MessageGotifyGlobal)
 		return response
 	}
 	req.Header.Add("Content-Type", "application/json")
@@ -104,20 +104,20 @@ func FindCompanie(token, cpfCnpj string) CompanyData {
 
 	res, err := client.Do(req)
 	if err != nil {
-		goutils.CreateFileDay(goutils.Message{File: "FindCompanie", Error: err.Error()})
+		goutils.CreateFileDay(goutils.Message{File: "FindCompanie", Error: err.Error()}, &goutils.MessageGotifyGlobal)
 		return response
 	}
 	defer res.Body.Close()
 
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		goutils.CreateFileDay(goutils.Message{File: "FindCompanie", Error: err.Error()})
+		goutils.CreateFileDay(goutils.Message{File: "FindCompanie", Error: err.Error()}, &goutils.MessageGotifyGlobal)
 		return response
 	}
 
 	err = json.Unmarshal(body, &response)
 	if err != nil {
-		goutils.CreateFileDay(goutils.Message{File: "FindCompanie", Error: err.Error()})
+		goutils.CreateFileDay(goutils.Message{File: "FindCompanie", Error: err.Error()}, &goutils.MessageGotifyGlobal)
 		return response
 	}
 	return response
@@ -130,32 +130,32 @@ func CreateCompany(token, cpfCnpj, socialReason, cep, street, number, complement
 	method := "POST"
 
 	payload := strings.NewReader(`{"name": "` + socialReason + `",` +
-		`"cnpj": "` + cpfCnpj + `",` +
-		`"address_postal_code": "` + cep + `",` +
-		`"address": "` + street + `",` +
-		`"address_number": "` + number + `",` +
-		`"address_complement": "` + complement + `",` +
-		`"district": "` + neighborhood + `",` +
-		`"country": "Brasil",` +
-		`"cep": "` + cep + `",` +
-		`"city_id": null,` +
-		`"contactEmails":[` +
-		`{` +
-		`"email":"` + email + `"` +
-		`}` +
-		`],` +
-		`"contactPhones":[` +
-		`{` +
-		`"phone":"` + phone + `"` +
-		`}` +
-		`]` +
-		`}`)
+			`"cnpj": "` + cpfCnpj + `",` +
+			`"address_postal_code": "` + cep + `",` +
+			`"address": "` + street + `",` +
+			`"address_number": "` + number + `",` +
+			`"address_complement": "` + complement + `",` +
+			`"district": "` + neighborhood + `",` +
+			`"country": "Brasil",` +
+			`"cep": "` + cep + `",` +
+			`"city_id": null,` +
+			`"contactEmails":[` +
+			`{` +
+			`"email":"` + email + `"` +
+			`}` +
+			`],` +
+			`"contactPhones":[` +
+			`{` +
+			`"phone":"` + phone + `"` +
+			`}` +
+			`]` +
+			`}`)
 
 	client := &http.Client{}
 	req, err := http.NewRequest(method, url, payload)
 
 	if err != nil {
-		goutils.CreateFileDay(goutils.Message{File: "CreateCompany", Error: err.Error()})
+		goutils.CreateFileDay(goutils.Message{File: "CreateCompany", Error: err.Error()}, &goutils.MessageGotifyGlobal)
 		return response
 	}
 	req.Header.Add("Content-Type", "application/json")
@@ -163,19 +163,19 @@ func CreateCompany(token, cpfCnpj, socialReason, cep, street, number, complement
 
 	res, err := client.Do(req)
 	if err != nil {
-		goutils.CreateFileDay(goutils.Message{File: "CreateCompany", Error: err.Error()})
+		goutils.CreateFileDay(goutils.Message{File: "CreateCompany", Error: err.Error()}, &goutils.MessageGotifyGlobal)
 		return response
 	}
 	defer res.Body.Close()
 
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		goutils.CreateFileDay(goutils.Message{File: "CreateCompany", Error: err.Error()})
+		goutils.CreateFileDay(goutils.Message{File: "CreateCompany", Error: err.Error()}, &goutils.MessageGotifyGlobal)
 		return response
 	}
 	err = json.Unmarshal(body, &response)
 	if err != nil {
-		goutils.CreateFileDay(goutils.Message{File: "CreateCompany", Error: err.Error()})
+		goutils.CreateFileDay(goutils.Message{File: "CreateCompany", Error: err.Error()}, &goutils.MessageGotifyGlobal)
 		return response
 	}
 	return response
@@ -189,7 +189,7 @@ func FindAllPeoples(token string) {
 	req, err := http.NewRequest(method, url, nil)
 
 	if err != nil {
-		goutils.CreateFileDay(goutils.Message{File: "FindAllPeoples", Error: err.Error()})
+		goutils.CreateFileDay(goutils.Message{File: "FindAllPeoples", Error: err.Error()}, &goutils.MessageGotifyGlobal)
 		return
 	}
 	req.Header.Add("Content-Type", "application/json")
@@ -197,21 +197,21 @@ func FindAllPeoples(token string) {
 
 	res, err := client.Do(req)
 	if err != nil {
-		goutils.CreateFileDay(goutils.Message{File: "FindAllPeoples", Error: err.Error()})
+		goutils.CreateFileDay(goutils.Message{File: "FindAllPeoples", Error: err.Error()}, &goutils.MessageGotifyGlobal)
 		return
 	}
 	defer res.Body.Close()
 
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		goutils.CreateFileDay(goutils.Message{File: "FindAllPeoples", Error: err.Error()})
+		goutils.CreateFileDay(goutils.Message{File: "FindAllPeoples", Error: err.Error()}, &goutils.MessageGotifyGlobal)
 		return
 	}
 
 	var response = PersonResponse{}
 	err = json.Unmarshal(body, &response)
 	if err != nil {
-		goutils.CreateFileDay(goutils.Message{File: "FindAllPeoples", Error: err.Error()})
+		goutils.CreateFileDay(goutils.Message{File: "FindAllPeoples", Error: err.Error()}, &goutils.MessageGotifyGlobal)
 		return
 	}
 
@@ -228,7 +228,7 @@ func FindUser(token, usuarioNome string) User {
 	req, err := http.NewRequest(method, url, nil)
 
 	if err != nil {
-		goutils.CreateFileDay(goutils.Message{File: "FindUser", Error: err.Error()})
+		goutils.CreateFileDay(goutils.Message{File: "FindUser", Error: err.Error()}, &goutils.MessageGotifyGlobal)
 		return u
 	}
 	req.Header.Add("Content-Type", "application/json")
@@ -236,21 +236,21 @@ func FindUser(token, usuarioNome string) User {
 
 	res, err := client.Do(req)
 	if err != nil {
-		goutils.CreateFileDay(goutils.Message{File: "FindUser", Error: err.Error()})
+		goutils.CreateFileDay(goutils.Message{File: "FindUser", Error: err.Error()}, &goutils.MessageGotifyGlobal)
 		return u
 	}
 	defer res.Body.Close()
 
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		goutils.CreateFileDay(goutils.Message{File: "FindUser", Error: err.Error()})
+		goutils.CreateFileDay(goutils.Message{File: "FindUser", Error: err.Error()}, &goutils.MessageGotifyGlobal)
 		return u
 	}
 
 	var response = UserResponse{}
 	err = json.Unmarshal(body, &response)
 	if err != nil {
-		goutils.CreateFileDay(goutils.Message{File: "FindUser", Error: err.Error()})
+		goutils.CreateFileDay(goutils.Message{File: "FindUser", Error: err.Error()}, &goutils.MessageGotifyGlobal)
 		return u
 	}
 
@@ -270,7 +270,7 @@ func FindUserByEmail(token, usuarioEmail string) User {
 	req, err := http.NewRequest(method, url, nil)
 
 	if err != nil {
-		goutils.CreateFileDay(goutils.Message{File: "FindUser", Error: err.Error()})
+		goutils.CreateFileDay(goutils.Message{File: "FindUser", Error: err.Error()}, &goutils.MessageGotifyGlobal)
 		return u
 	}
 	req.Header.Add("Content-Type", "application/json")
@@ -278,21 +278,21 @@ func FindUserByEmail(token, usuarioEmail string) User {
 
 	res, err := client.Do(req)
 	if err != nil {
-		goutils.CreateFileDay(goutils.Message{File: "FindUser", Error: err.Error()})
+		goutils.CreateFileDay(goutils.Message{File: "FindUser", Error: err.Error()}, &goutils.MessageGotifyGlobal)
 		return u
 	}
 	defer res.Body.Close()
 
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		goutils.CreateFileDay(goutils.Message{File: "FindUser", Error: err.Error()})
+		goutils.CreateFileDay(goutils.Message{File: "FindUser", Error: err.Error()}, &goutils.MessageGotifyGlobal)
 		return u
 	}
 
 	var response = UserResponse{}
 	err = json.Unmarshal(body, &response)
 	if err != nil {
-		goutils.CreateFileDay(goutils.Message{File: "FindUser", Error: err.Error()})
+		goutils.CreateFileDay(goutils.Message{File: "FindUser", Error: err.Error()}, &goutils.MessageGotifyGlobal)
 		return u
 	}
 
@@ -308,7 +308,7 @@ func CreateFile(token, url, dealId string) error {
 
 	err := DownloadFile(url, fileName)
 	if err != nil {
-		goutils.CreateFileDay(goutils.Message{File: "CreateFile", Error: err.Error()})
+		goutils.CreateFileDay(goutils.Message{File: "CreateFile", Error: err.Error()}, &goutils.MessageGotifyGlobal)
 		return err
 	}
 
@@ -322,16 +322,16 @@ func CreateFile(token, url, dealId string) error {
 	file, errFile1 := os.Open("tmp/" + fileName)
 	defer file.Close()
 	part1,
-		errFile1 := writer.CreateFormFile("file", filepath.Base("tmp/"+fileName))
+			errFile1 := writer.CreateFormFile("file", filepath.Base("tmp/"+fileName))
 	_, errFile1 = io.Copy(part1, file)
 	if errFile1 != nil {
-		goutils.CreateFileDay(goutils.Message{File: "CreateFile", Error: err.Error()})
+		goutils.CreateFileDay(goutils.Message{File: "CreateFile", Error: err.Error()}, &goutils.MessageGotifyGlobal)
 		return errFile1
 	}
 	_ = writer.WriteField("deal_id", dealId)
 	err = writer.Close()
 	if err != nil {
-		goutils.CreateFileDay(goutils.Message{File: "CreateFile", Error: err.Error()})
+		goutils.CreateFileDay(goutils.Message{File: "CreateFile", Error: err.Error()}, &goutils.MessageGotifyGlobal)
 		return err
 	}
 
@@ -339,7 +339,7 @@ func CreateFile(token, url, dealId string) error {
 	req, err := http.NewRequest(method, urlReq, payload)
 
 	if err != nil {
-		goutils.CreateFileDay(goutils.Message{File: "CreateFile", Error: err.Error()})
+		goutils.CreateFileDay(goutils.Message{File: "CreateFile", Error: err.Error()}, &goutils.MessageGotifyGlobal)
 		return err
 	}
 	req.Header.Add("Content-Type", "multipart/form-data")
@@ -348,21 +348,21 @@ func CreateFile(token, url, dealId string) error {
 
 	res, err := client.Do(req)
 	if err != nil {
-		goutils.CreateFileDay(goutils.Message{File: "CreateFile", Error: err.Error()})
+		goutils.CreateFileDay(goutils.Message{File: "CreateFile", Error: err.Error()}, &goutils.MessageGotifyGlobal)
 		return err
 	}
 	defer res.Body.Close()
 
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		goutils.CreateFileDay(goutils.Message{File: "CreateFile", Error: err.Error()})
+		goutils.CreateFileDay(goutils.Message{File: "CreateFile", Error: err.Error()}, &goutils.MessageGotifyGlobal)
 		return err
 	}
 	//var response = FileCreateResponse{}
 	var response = FileCreateResponse{}
 	err = json.Unmarshal(body, &response)
 	if err != nil {
-		goutils.CreateFileDay(goutils.Message{File: "CreateFile", Error: err.Error()})
+		goutils.CreateFileDay(goutils.Message{File: "CreateFile", Error: err.Error()}, &goutils.MessageGotifyGlobal)
 		return err
 	}
 
